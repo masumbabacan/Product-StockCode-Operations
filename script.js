@@ -8,7 +8,7 @@
                 for (const iterator of $(".product-right .product-box .product-list-title")) {
                     if ($(iterator).text() == "Stok Kodu") {
                         app.stockCode = $(iterator).parent().find(".product-list-content").text();
-                    }
+                    } 
                 }
             },
             getFolderUrl: async () => {
