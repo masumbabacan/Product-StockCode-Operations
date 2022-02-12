@@ -1,6 +1,6 @@
 (function($){
     let app = {
-        siteUrl:"####",
+        siteUrl:"###",
         stockCode : "",
         data : "",
         func: {
@@ -9,7 +9,7 @@
             },
             getFolderUrl: async () => {
                 await $.ajax({
-                    url:"####",
+                    url:"###",
                     type:'post',
                     data:{stockCode : app.stockCode},
                     success:(data) =>{
@@ -54,7 +54,6 @@
                 app.func.addFolderButtons().then(() => {
                     app.func.productPopupButtonActive();
                     if ($(".product-threadri .theree-d").length > 0) {
-                        console.log($(".product-threadri .theree-d").length)
                         $(".product-favorite-buttons .product-popup").removeClass("d-none");
                     }
                     
