@@ -1,46 +1,65 @@
 (function($){
-    app = {
-        siteUrl:"here the server is determined",
+    let app = {
+        siteUrl:"https://www.eaeaydinlatma.com/flp/digitalfikirler",
         stockCode : "",
         data : "",
         func: {
             getStockCode: () => {
-                for (const iterator of $(".product-right .product-box .product-list-title")) {
-                    if ($(iterator).text() == "Stok Kodu") {
-                        app.stockCode = $(iterator).parent().find(".product-list-content").text();
-                    } 
-                }
+                app.stockCode = stockCode;
             },
             getFolderUrl: async () => {
-            await $.ajax({
-                    url:"thePlaceToBeRequestedIsDeterminedHere",
+                await $.ajax({
+                    url:"https://www.eaeaydinlatma.com/flp/digitalfikirler/flp/index.php",
                     type:'post',
                     data:{stockCode : app.stockCode},
                     success:(data) =>{
-                      app.data = JSON.parse(data);
+                        app.data = JSON.parse(data);
                     }
                 });
             },
-            addFolderButtons: () => {
-                $(".product-right .product-compare").after(`<div class="d-flex align-items-center justify-content-end folder-buttons w-100 mt-5"></div>`);
+            addFolderButtons: async () => {
+                $("[data-src='#product-threadri-content']").remove();
+                $(".product-favorite-buttons .product-popup").addClass("d-none");
                 for (const key in app.data) {
-                    $(".product-area-top").find(".folder-buttons").append(`
-                        <div class="d-flex justify-content-center align-items-center w-100">
-                            <a href="${app.siteUrl + app.data[key].url}" rel="noopener noreferrer" target="_blank" class="${app.data[key].btnType + " " + app.data[key].class} folder-button w-100 mx-1">
-                                    <span class="text-white">${app.data[key].btnName}</span>
+                   await $(".product-area-top").find(".product-threadri").append(`
+                        <div class="w-100">
+                            <a href="javascript:;" data-fancybox data-type="iframe" data-src="${app.siteUrl + app.data[key].url.replace("../", "/")}"  class="${app.data[key].btnType + " " + app.data[key].class} folder-button d-flex justify-content-center align-items-center border w-100 mb-3">
+                                <div class=" d-flex justify-content-between align-items-center">
+                                    ${app.data[key].svg}
+                                    ${app.data[key].btnName}
+                                </div>
                             </a>
                         </div>
                     `);
                 }
+            },
+            productPopupButtonActive: () => {
+                let productPopup = $(".product-left .product-favorite-buttons .product-popup a");
+                let pdfButton = $(".product-threadri a:eq(1)");
+                productPopup.attr("data-src",$(".product-threadri a:eq(0)").attr("data-src"))
+                productPopup.attr("href","javascript:;")
+                productPopup.attr("data-type","iframe")
+                pdfButton.attr("href",$(".product-threadri a:eq(1)").attr("data-src"));
+                pdfButton.attr("target","_blank");
+                pdfButton.removeAttr("data-src");
+                pdfButton.removeAttr("data-type");
+                pdfButton.removeAttr("data-fancybox");
             }
         }
     }
     $(document).ready(() => {
         if (window.location.href.indexOf("/urun") !== -1) {
-        app.func.getStockCode();
-        app.func.getFolderUrl().then(() => {
-            app.func.addFolderButtons();
-        });
-    }
+            app.func.getStockCode();
+            app.func.getFolderUrl().then(() => {
+                app.func.addFolderButtons().then(() => {
+                    app.func.productPopupButtonActive();
+                    if ($(".product-threadri .theree-d").length > 0) {
+                        console.log($(".product-threadri .theree-d").length)
+                        $(".product-favorite-buttons .product-popup").removeClass("d-none");
+                    }
+                    
+                });
+            });
+        }
     });
 })(jQuery);
