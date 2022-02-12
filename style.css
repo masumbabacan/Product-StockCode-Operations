@@ -6,24 +6,6 @@
     font-weight: 600;
 }
 
-/* .product-right .theree-d,.product-right .pdf{
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
-
-.product-right .theree-d svg , .product-right .pdf svg , .product-right .theree-d span , .product-right .pdf span{
-    width: 50% !important;
-} */
-
 .product-right .theree-d svg , .product-right .pdf svg{
     width: 60px !important;
 }
-
-/* .product-right .custom-btn-svg{
-    text-align: right;
-}
-
-.product-right .custom-button-text{
-    text-align: left;
-} */
