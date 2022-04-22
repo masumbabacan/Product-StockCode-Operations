@@ -1,6 +1,6 @@
 (function($){
     let app = {
-        siteUrl:"https://www.eaeaydinlatma.com/flp/digitalfikirler",
+        siteUrl:"**",
         stockCode : "",
         data : "",
         func: {
@@ -9,7 +9,7 @@
             },
             getFolderUrl: async () => {
                 await $.ajax({
-                    url:"https://www.eaeaydinlatma.com/flp/digitalfikirler/flp/index.php",
+                    url:"**",
                     type:'post',
                     data:{stockCode : app.stockCode},
                     success:(data) =>{
